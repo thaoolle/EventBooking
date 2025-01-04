@@ -1,0 +1,80 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'assets/css/auth.css' %}"/>
+
+      <div class="content">
+        <div class="tabs">
+          <button class="tab__btn active" data-tab="1">Đăng Nhập</button>
+          <span></span>
+          <button class="tab__btn" data-tab="2">Đăng Ký</button>
+        </div>
+        <div class="tabs__panel">
+          
+          <!--Login-->
+          <div class="panel active" data-panel="1">
+            <form method="POST" action="{% if request.GET.next %}{% url 'userauth:login' %}?next={{ request.GET.next }}{% else %}{% url 'userauth:login' %}{% endif %}">>
+              {% csrf_token %}
+
+              <div class="input__group__form">
+                {{ login_form.username }}
+                <label for="username">Tên Người Dùng</label>
+              </div>
+              <div class="input__group__form">
+                {{ login_form.password }}
+                <label for="login-password">Mật Khẩu</label>
+                <span id="login-password-eye">
+                  <i class="ri-eye-off-fill"></i>
+                </span>
+              </div>
+              <button>Đăng Nhập</button>
+            </form>
+          </div>
+
+          <!--Sign up-->
+          <div class="panel" data-panel="2">
+            <form method="POST" action="{% url 'userauth:sign-up' %}">
+              {% csrf_token %}
+
+              <div class="input__group__form">
+                {{ register_form.firstname }}
+                <label for="firstname">Tên</label>
+              </div>
+              <div class="input__group__form">
+                {{ register_form.lastname }}
+                <label for="lastname">Họ</label>
+              </div>
+              <div class="input__group__form">
+                {{ register_form.username }}
+                <label for="username">Tên Người Dùng</label>
+              </div>
+              <div class="input__group__form">
+                {{ register_form.email }}
+                <label for="email">Email</label>
+              </div>
+              <div class="input__group__form">
+                {{ register_form.password1 }}
+                <label for="signup-password">Mật Khẩu</label>
+                <span id="signup-password-eye">
+                  <i class="ri-eye-off-fill"></i>
+                </span>
+              </div>
+              <div class="input__group__form">
+                {{ register_form.password2 }}
+                <label for="confirm-password">Xác Nhận Mật Khẩu</label>
+                <span id="confirm-password-eye">
+                  <i class="ri-eye-off-fill"></i>
+                </span>
+              </div>
+              <button>Đăng Ký</button>
+              <p>hoặc</p>
+              <a href="">Đã có tài khoản? <span>Đăng nhập ngay!</span></a>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <script src="{% static 'assets/js/auth.js' %}"></script>
+
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header_content %}
+<div class="section__container header__container" id="home">
+  <h1>Kết nối đam mê<br />sống trọn <span>sự kiện</span>!</h1>
+</div>
+<style>
+  .header {
+    background-image: url('{% static "assets/images/header.gif" %}');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+</style>
+{% endblock header_content %}
+
+{% block content %}
+<section class="section__container event__container">
+    <h2 class="section__subheader">KẾT QUẢ TÌM KIẾM</h2>
+    {% if results %}
+        <div class="event__grid">
+            {% for event in results %}
+            <div class="event__card">
+                {% if event.eid %} 
+                <a href="{% url 'core:event_detail' eid=event.eid %}" class="event__card__image">
+                    <img src="{{ event.image.url }}" alt="event poster" class="section__image"/>
+                </a>
+                {% endif %}
+                <div class="event__card__details">
+                    <h4>{{ event.title }}</h4>
+                    <h5><span>{{ event.price|floatformat:0|default_if_none:"0"|intcomma }}đ</span></h5>
+                    <div class="event__card__actions">
+                        <button class="btn">Đặt Vé</button>
+                        <button class="btn" data-event-id="{{ event.eid }}">
+                            <i class="ri-shopping-cart-line"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Không tìm thấy sự kiện nào phù hợp.</p>
+    {% endif %}
+</section>
+{% endblock %}

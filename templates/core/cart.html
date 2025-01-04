@@ -1,0 +1,46 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header_content %}
+<div class="section__container header__container" id="home">
+  <h1>Kết nối đam mê<br />sống trọn <span>sự kiện</span>!</h1>
+</div>
+<style>
+  .header {
+    background-image: url('{% static "assets/images/header.gif" %}');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+</style>
+{% endblock header_content %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'assets/css/cart.css' %}"/>
+
+<section class="section__container cart__container">
+    <h1 class="cart__title">Giỏ hàng của bạn</h1>
+    
+    <div class="cart__content">
+        <div class="cart__items">
+        </div>
+        
+        <div class="cart__summary">
+            <h3>Tổng đơn hàng</h3>
+            <div class="cart__summary__details">
+                <div class="summary__row">
+                    <span>Tổng tiền vé:</span>
+                    <span class="total-amount">0đ</span>
+                </div>
+                <div class="summary__row">
+                    <span>Số lượng vé:</span>
+                    <span class="total-tickets">0</span>
+                </div>
+            </div>
+            <button class="btn checkout-btn">Thanh toán</button>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

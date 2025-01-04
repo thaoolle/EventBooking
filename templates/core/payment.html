@@ -1,0 +1,66 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header_content %}
+
+<style>
+  .header {
+    background-image: url('{% static "assets/images/header.gif" %}');
+    background-position: center top;
+    background-size: cover; 
+    background-repeat: no-repeat;
+    height: 400px;
+  }
+</style>
+{% endblock header_content %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'assets/css/payment.css' %}"/>
+
+<section class="section__container payment__container">
+    <h1 class="payment__title">Thanh toán</h1>
+    
+    <div class="payment__content">
+        <div class="payment__summary">
+            <h3>Chi tiết đơn hàng</h3>
+            <div class="order__details">
+                <div class="detail__row">
+                    <span>Tổng tiền vé:</span>
+                    <span class="total-amount">0đ</span>
+                </div>
+                <div class="detail__row">
+                    <span>Số lượng vé:</span>
+                    <span class="total-tickets">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment__form">
+            <h3>Thông tin thanh toán</h3>
+            <form id="paymentForm" method="POST" action="{% url 'core:process_payment' %}">
+                {% csrf_token %}
+                <div class="form__group">
+                    <label for="cardName">Tên chủ thẻ</label>
+                    <input type="text" id="cardName" name="cardName" required>
+                </div>
+                <div class="form__group">
+                    <label for="cardNumber">Số thẻ</label>
+                    <input type="text" id="cardNumber" name="cardNumber" required>
+                </div>
+                <div class="form__row">
+                    <div class="form__group">
+                        <label for="expiryDate">Ngày hết hạn</label>
+                        <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" required>
+                    </div>
+                    <div class="form__group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cvv" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn payment-btn">Xác nhận thanh toán</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

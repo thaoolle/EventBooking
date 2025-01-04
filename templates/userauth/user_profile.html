@@ -1,0 +1,76 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header_content %}
+<style>
+    .header {
+      background-color: var(--text-dark);
+      background-position: center top;
+      background-size: cover; 
+      background-repeat: no-repeat;
+      height: 10%;
+    }
+  </style>
+{% endblock header_content %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'assets/css/payment.css' %}"/>
+
+<section class="section__container payment__container">
+    {% if message_status %}
+        <div id="error-message" class="error-message">{{ message_status }}</div>
+    {% endif %}
+    <h1 class="payment__title" style="color: #bc1c5c;"><strong>Quản lý tài khoản</strong></h1>
+    <div>
+        <button class="tab-btn active" data-tab="1">Thông tin cá nhân</button>
+        <span></span>
+        <button class="tab-btn" data-tab="2">Đổi mật khẩu</button>
+    </div>
+    
+    <div class="panel active">
+        <form id="paymentForm" method="POST" action="{% url 'userauth:edit-info' %}">
+            {% csrf_token %}
+            <div class="form__group">
+                <label for="username">Tên tài khoản</label>
+                <input type="text" id="username" name="username" value="{{ user.username }}">
+            </div>
+            <div class="form__group">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" value="{{ user.email }}">
+            </div>
+            <div class="form__row">
+                <div class="form__group">
+                    <label for="last_name">Họ</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}">
+                </div>
+                <div class="form__group">
+                    <label for="first_name">Tên</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}">
+                </div>
+            </div>
+            <button type="submit" class="btn">Cập nhật thông tin</button>
+        </form>
+    </div>
+
+    <div class="panel" >
+        <form method="POST" action="{% url 'userauth:change-password' %}">
+            {% csrf_token %}
+            <div class="form__group">
+                <label for="current_password">Mật khẩu hiện tại</label>
+                <input type="password" id="current_password" name="current_password" required>
+            </div>
+            <div class="form__group">
+                <label for="new_password">Mật khẩu mới</label>
+                <input type="password" id="new_password" name="new_password" required>
+            </div>
+            <div class="form__group">
+                <label for="confirm_password">Xác nhận mật khẩu</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn">Đổi mật khẩu</button>
+        </form>
+    </div>
+</section>
+<script src="{% static 'assets/js/user.js' %}"></script>
+{% endblock content %}

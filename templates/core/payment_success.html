@@ -1,0 +1,31 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% block header_content %}
+<style>
+  .header {
+    background-image: url('{% static "assets/images/header.gif" %}');
+    background-position: center top;
+    background-size: cover; 
+    background-repeat: no-repeat;
+    height: 400px;
+  }
+</style>
+{% endblock header_content %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'assets/css/payment.css' %}"/>
+
+<section class="section__container success__container">
+    <div class="success__content">
+        <div class="success__icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h1>Thanh toán thành công!</h1>
+        <p>Cảm ơn bạn đã đặt vé. Chúng tôi đã gửi email xác nhận đến địa chỉ email của bạn.</p>
+        <div class="success__actions">
+            <a href="{% url 'core:index' %}" class="btn">Về trang chủ</a>
+            {% comment %} <a href="{% url 'tickets' %}" class="btn">Xem vé của tôi</a> {% endcomment %}
+        </div>
+    </div>
+</section>
+{% endblock %}

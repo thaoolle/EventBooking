@@ -1,0 +1,157 @@
+
+body {
+  background-color: var(--text-dark);
+}
+
+
+.content {
+  padding-block: 8rem 5rem;
+  padding-inline: 1rem;
+}
+
+
+.tabs {
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.tab__btn {
+  outline: none;
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-light);
+  background-color: transparent;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.tab__btn.active {
+  color: var(--primary-color);
+}
+
+.tabs span {
+  display: flex;
+  height: 1rem;
+  width: 2px;
+  background-color: var(--text-light);
+}
+
+.panel {
+  display: none;
+  max-width: 400px;
+  margin-inline: auto;
+}
+
+.panel.active {
+  display: block;
+  animation: show-panel 0.3s forwards;
+}
+
+.panel.close {
+  animation: hide-panel 0.3s forwards;
+}
+
+@keyframes show-panel {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes hide-panel {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.panel form {
+  display: grid;
+}
+
+.input__group__form {
+  margin-bottom: 2rem;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--text-light);
+}
+
+.input__group__form label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--white);
+  transition: 0.3s;
+}
+
+.input__group__form input {
+  width: 100%;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--white);
+  background-color: transparent;
+}
+
+.input__group__form input:not(:placeholder-shown) ~ label,
+.input__group__form input:focus ~ label {
+  font-size: 0.7rem;
+  top: 0px;
+  color: var(--text-light);
+}
+
+.input__group__form span {
+  font-size: 1.2rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+.panel form button {
+  max-width: fit-content;
+  margin-inline: auto;
+  margin-bottom: 2rem;
+  padding: 0.5rem 2.5rem;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.panel form p {
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.panel form a {
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-light);
+  transition: 0.3s;
+}
+
+.panel form a span {
+  color: var(--primary-color);
+}
+
+.panel form a:hover {
+  color: var(--white);
+}

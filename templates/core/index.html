@@ -1,0 +1,83 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header_content %}
+<div class="section__container header__container" id="home">
+  <h1>Kết nối đam mê<br />sống trọn <span>sự kiện</span>!</h1>
+</div>
+<style>
+  .header {
+    background-image: url('{% static "assets/images/header.gif" %}');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+</style>
+{% endblock header_content %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'assets/css/styles.css' %}"/>
+<section class="section__container booking__container">
+    <form action="/search" class="booking__form" method="GET">
+        <div class="input__group">
+            <span><i class="ri-map-pin-2-fill"></i></span>
+            <div>
+                <label for="location">Địa điểm</label>
+                <select id="location" name="location">
+                    <option value="" disabled selected>Chọn địa điểm</option>
+                    {% for l in locations %}
+                    <option value="{{ l.lid }}">{{ l.location }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="input__group">
+            <span><i class="ri-calendar-2-fill"></i></span>
+            <div>
+                <label for="time">Thời Gian</label>
+                <input type="text" id="date-range" name="time" placeholder="Chọn khoảng thời gian" />
+            </div>
+        </div>
+        <div class="input__group input__btn">
+            <button class="btn" type="submit">Tìm Kiếm</button>
+        </div>
+    </form>
+    
+</section>
+
+<section class="section__container event__container" id="event">
+<h2 class="section__subheader">SỰ KIỆN NỔI BẬT</h2>
+
+<div class="event__grid">
+    {% for e in events %}
+    <div class="event__card">
+        {% if e.eid %} 
+    <a href="{% url 'core:event_detail' eid=e.eid %}" class="event__card__image">
+        <img src="{{ e.image.url }}" alt="event poster" class="section__image"/>
+    </a>
+    {% endif %}
+    <div class="event__card__details">
+        <h4>{{ e.title }}</h4>
+        <h5><span>{{ e.price|floatformat:0|default_if_none:"0"|intcomma}}đ</span></h5>
+        <div class="event__card__actions">
+            <button class="btn book-btn">Đặt Vé</button>
+            <button class="cart-btn" data-event-id="{{ e.eid }}">
+                <i class="ri-shopping-cart-line"></i>
+            </button>
+        </div>
+    </div>
+    </div>
+    {% endfor %}
+    
+
+</div>
+
+</div>
+</section>
+
+<script src="{% static 'assets/js/datepicker.js' %}"></script>
+
+{% endblock content %}
+

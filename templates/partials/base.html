@@ -1,0 +1,107 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}"/>
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/images/logo_icon.png' %}">
+    <title>Kết nối đam mê, sống trọn sự kiện | Eventick</title>
+  </head>
+  <body>
+    <header class="header">
+      <nav>
+        <div class="nav__bar">
+          <div class="logo">
+            <a href="{% if request.path == '/' %}#home{% else %}{% url 'core:index' %}#{% endif %}"><img src="{% static 'assets/images/logo.png' %}" alt="logo" /></a>
+          </div>
+          <div class="nav__menu__btn" id="menu-btn">
+            <i class="ri-menu-line"></i>
+          </div>
+        </div>
+        <ul class="nav__links" id="nav-links">
+          <li>
+            <a href="{% if request.path == '/' %}#home{% else %}{% url 'core:index' %}#home{% endif %}">Trang Chủ</a>
+          </li>
+          <li>
+            <a href="{% if request.path == '/' %}#event{% else %}{% url 'core:index' %}#event{% endif %}">Sự Kiện</a>
+          </li>
+          <li>
+            <a href="{% if request.path == '/' %}#contact{% else %}{% url 'core:index' %}#contact{% endif %}">Liên Hệ</a>
+          </li>
+        </ul>
+        <div class="nav__icons">
+          {% if user.is_authenticated %}
+          <span><i class="ri-coupon-line" style="color: white;"></i></span>
+          {% endif %}
+          <span class="cart-icon" onclick="window.location.href='{% url 'core:cart' %}'">
+            <i class="ri-shopping-cart-line" style="color: white;"></i>
+            <span class="cart-counter">0</span>
+          </span>
+            {% if user.is_authenticated %}
+            <span class="user-icon" onclick="toggleDropdown()">
+              <i class="ri-user-line" style="color: white;"></i>
+            </span>
+            <div id="user-dropdown" class="user-dropdown">
+                <a href="{% url 'userauth:my-account' %}">Tài khoản</a>
+                <form action="{% url 'userauth:logout' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit">Đăng xuất</button>
+                </form>
+            </div>
+            {% else %}
+              <button class="nav__btn" onclick="window.location.href='{% url 'userauth:sign-up' %}'">Đăng Nhập</button>
+            {% endif %}
+        </div>  
+        
+      </nav>
+    {% block header_content %}
+    {% endblock header_content %}  
+    </header>
+    <!--End Header-->
+
+    {% block content %}
+
+    {% endblock content %}
+
+    <!--Footer-->
+    <footer class="footer" id="contact">
+        <div class="section__container footer__container">
+          <div class="footer__col">
+            <div class="logo">
+              <a href="{% if request.path == '/' %}#home{% else %}{% url 'core:index' %}#home{% endif %}"><img src="{% static 'assets/images/logo.png' %}" alt="logo" /></a>
+            </div>
+            <p class="section__description">
+              Khám phá sự kiện thú vị quanh bạn! 
+              Tìm kiếm, đặt vé ngay để trải nghiệm những trải nghiệm khó quên.
+            </p>
+          </div>
+        
+          <div class="footer__col">
+            <h4>CONTACT US</h4>
+            <ul class="footer__links">
+              <li><a href="#">thaole@gmail.com</a></li>
+            </ul>
+            <div class="footer__socials">
+              <a href="#"><img src="{% static 'assets/images/facebook.png' %}" alt="facebook" /></a>
+              <a href="#"><img src="{% static 'assets/images/instagram.png' %}" alt="instagram" /></a>
+              <a href="#"><img src="{% static 'assets/images/youtube.png' %}" alt="youtube" /></a>
+              <a href="#"><img src="{% static 'assets/images/twitter.png' %}" alt="twitter" /></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__bar">
+          Copyright © Le Thi Thu Thao. All rights reserved.
+        </div>
+      </footer>
+  
+      <script src="https://unpkg.com/scrollreveal"></script>
+      <script src="{% static 'assets/js/main.js' %}"></script>
+      <script src="{% static 'assets/js/cart.js' %}"></script>
+  </body>
+</html>
+
+
+

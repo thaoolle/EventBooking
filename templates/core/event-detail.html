@@ -1,0 +1,165 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block header_content %}
+<div class="section__container header__container" id="home">
+  <h1>Kết nối đam mê<br />sống trọn <span>sự kiện</span>!</h1>
+</div>
+<style>
+  .header {
+    background-image: url('{% static "assets/images/header.gif" %}');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+</style>
+{% endblock header_content %}
+
+{% block content %}
+<section class="section__container event-detail__container">
+    <div class="event-detail__grid">
+        <div class="event-detail__image">
+            <img src="{{ event.image.url }}" alt="{{ event.title }}" class="section__image"/>
+        </div>
+        <div class="event-detail__info">
+            <h1>{{ event.title }}</h1>
+            <div class="event-detail__meta">
+                <p><i class="ri-map-pin-2-fill"></i> {{ event.location }}</p>
+                <p><i class="ri-calendar-2-fill"></i> {{ event.date }}</p>
+            </div>
+            <div class="event-detail__price">
+                <h3>{{ event.price|floatformat:0|default_if_none:"0"|intcomma}}đ</h3>
+            </div>
+            <div class="event-detail__description">
+                <h4>Mô tả sự kiện</h4>
+                <p>{{ event.description|linebreaks }}</p>
+            </div>
+            <div class="event-detail__actions">
+                <div class="quantity-selector">
+                    <button class="quantity-btn minus"><i class="ri-subtract-line"></i></button>
+                    <input type="number" value="1" min="1" max="10" class="quantity-input">
+                    <button class="quantity-btn plus"><i class="ri-add-line"></i></button>
+                </div>
+                <button class="btn add-to-cart-btn" data-event-id="{{ event.eid }}">
+                    Thêm vào giỏ hàng
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.event-detail__container {
+    padding: 2rem 0;
+}
+
+.nav__menu__btn {
+    color: black !important;
+}
+
+.event-detail__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.event-detail__image img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.event-detail__meta {
+    display: flex;
+    gap: 2rem;
+    margin: 1rem 0;
+}
+
+.event-detail__meta p {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.event-detail__price {
+    margin: 1.5rem 0;
+}
+
+.event-detail__description {
+    margin: 2rem 0;
+}
+
+.event-detail__actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.quantity-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.quantity-input {
+    width: 50px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+    .event-detail__grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const minusBtn = document.querySelector('.minus');
+        const plusBtn = document.querySelector('.plus');
+        const quantityInput = document.querySelector('.quantity-input');
+        const maxQuantity = parseInt(quantityInput.getAttribute('max'));
+        const minQuantity = parseInt(quantityInput.getAttribute('min'));
+    
+        minusBtn.addEventListener('click', function() {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > minQuantity) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+    
+        plusBtn.addEventListener('click', function() {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue < maxQuantity) {
+                quantityInput.value = currentValue + 1;
+            }
+        });
+    
+        // Prevent manual input of invalid values
+        quantityInput.addEventListener('change', function() {
+            let value = parseInt(this.value);
+            if (value > maxQuantity) {
+                this.value = maxQuantity;
+            }
+            if (value < minQuantity) {
+                this.value = minQuantity;
+            }
+            if (isNaN(value)) {
+                this.value = 1;
+            }
+        });
+    });
+    </script>
+    
+{% endblock content %}
