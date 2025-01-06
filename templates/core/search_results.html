@@ -32,8 +32,8 @@
                     <h4>{{ event.title }}</h4>
                     <h5><span>{{ event.price|floatformat:0|default_if_none:"0"|intcomma }}đ</span></h5>
                     <div class="event__card__actions">
-                        <button class="btn">Đặt Vé</button>
-                        <button class="btn" data-event-id="{{ event.eid }}">
+                        <button class="btn book-btn">Đặt Vé</button>
+                        <button class="cart-btn" data-event-id="{{ event.eid }}">
                             <i class="ri-shopping-cart-line"></i>
                         </button>
                     </div>
